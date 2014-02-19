@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+<style type="text/css">
+div {
+	margin-left: 3%;
+	margin-right: 3%;
+}
+</style>
+{% endblock %}
+
+{% block corpo %}
+	<table class="table table-condensed">
+	<caption>Adminstradores</caption>
+	{% for usuario in admins %}
+		
+		<tr><td>
+			<a href="{% url 'proagrupar.views.removeUsuario' nr_usuario=usuario.id %}" title="Remover usuário"><i class="icon-trash"></i>
+			<a href="{% url 'proagrupar.views.usuario' nr_usuario=usuario.id%}">{{ usuario.nome}} - {{ usuario.get_campus_display }}</a>
+		</td></tr>
+	{% empty %}
+		<tr><td>Sem adminstradores cadastrados</td></tr>
+	{% endfor %}
+	</table>
+
+	<table class="table  table-condensed">
+	<caption>Coordenadores</caption>
+	{% for usuario in coords %}
+		
+		<tr><td>
+			<a href="{% url 'proagrupar.views.removeUsuario' nr_usuario=usuario.id %}" title="Remover usuário"><i class="icon-trash"></i>
+			<a href="{% url 'proagrupar.views.usuario' nr_usuario=usuario.id%}">{{ usuario.nome}} - {{ usuario.get_campus_display }}</a>
+		</td></tr>
+	{% empty %}
+		<tr><td>Sem coordenadores cadastrados</td></tr>
+	{% endfor %}
+	</table>
+
+	<table class="table table-condensed">
+	<caption>Professores</caption>
+	{% for usuario in profs %}
+		
+		<tr><td>
+			<a href="{% url 'proagrupar.views.removeUsuario' nr_usuario=usuario.id %}" title="Remover usuário"><i class="icon-trash"></i>
+			<a href="{% url 'proagrupar.views.usuario' nr_usuario=usuario.id%}">{{ usuario.nome}} - {{ usuario.get_campus_display }}</a>
+		</td></tr>
+	{% empty %}
+		<tr><td>Sem professores cadastrados</td></tr>
+	{% endfor %}
+	</table>
+	<a class="btn" href="javascript:window.history.go(-1)"><i class="icon-arrow-left"></i> Voltar</a>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+<style type="text/css">
+div {
+	width: 96%;
+}
+</style>
+{% endblock %}
+
+{% block corpo %}
+<ul>
+{% if usuario.tipo == "ADM" %}
+	<p>Projetos cadastrados</p>
+	{% for projeto in projetos %}
+		<li><a href="{% url 'proagrupar.views.removeProjeto' nr_projeto=projeto.id%}" title="Remover projeto"><i class="icon-trash"></i></a>
+		<a href="{% url 'proagrupar.views.projeto' nr_projeto=projeto.id%}">{{ projeto.titulo }}</a>
+	{% endfor %}
+{% else %}
+<p>Projetos cadastrados</p>
+
+	{% for projeto in lista_projetos %}
+		<li><a href="{% url 'proagrupar.views.removeProjeto' nr_projeto=projeto.id%}" title="Remover projeto"><i class="icon-trash"></i></a>
+			<a href="{% url 'proagrupar.views.projeto' nr_projeto=projeto.id%}">{{ projeto.titulo }}</a>
+			<div>
+			<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+					<th>Relatório</th>
+					<th>Atualizado</th>
+					<th>Chancelado</th>
+					</tr>
+				</thead>
+				{% for relatorio in lista_relatorios %}
+				<tr>
+					{% if relatorio.projeto == projeto %}
+					<td>
+						<a href="{% url 'proagrupar.views.relatorio' nr_projeto=projeto.id nr_relatorio=relatorio.id %}">{{ relatorio.get_tipo_display }}</a>
+					</td>
+					<td>
+						{% if relatorio.descricao != "" %}
+						<i class="icon-thumbs-up"></i>
+						{% else %}
+						<i class="icon-thumbs-down"></i>
+						{% endif %}
+						{% if hoje >= relatorio.periodoInicio and hoje <= relatorio.periodoFim %}
+						<i class="icon-ok-sign"></i>
+						{% endif %}
+						{% if hoje > relatorio.periodoFim and relatorio.descricao == ""%}
+						<i class="icon-warning-sign"></i>
+						{% endif %}
+					</td>
+					<td>
+						{% if relatorio.chancelamento %}
+						<i class="icon-thumbs-up"></i>
+						{% else %}
+						<i class="icon-thumbs-down"></i>
+						{% endif %}
+					</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</table>
+			</div>
+		</li><br>
+	{% empty %}
+		<li>Sem projetos adicionados</li>
+	{% endfor %}
+{% endif %}
+</ul>
+<a class="btn" href="javascript:window.history.go(-1)"><i class="icon-arrow-left"></i> Voltar</a>
+{% endblock %}

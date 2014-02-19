@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+	<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+	<style type="text/css">
+		div {
+			margin-left: 3%;
+			margin-right: 3%;
+			margin-top: 2%;
+		}
+	</style>
+	{% block cabecalho %}
+	<title>PROAGRUPAR</title>
+	{% endblock %}
+</head>
+<body>
+	<div>
+	{% block corpo %}
+	<!-- corpo -->
+	{% endblock %}
+	</div>
+</body>
+</html>

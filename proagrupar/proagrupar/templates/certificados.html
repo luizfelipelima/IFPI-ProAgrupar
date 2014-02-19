@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+
+<ul>
+	{% for certificado in lista_certificados %}
+		
+		<li>
+			{{ certificado }}
+		</li>
+		
+	{% empty %}
+		<li>Não há certificados no momento.</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

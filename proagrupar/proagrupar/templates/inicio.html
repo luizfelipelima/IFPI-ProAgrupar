@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+
+{% endblock %}
+
+{% block corpo %}
+	<!--  Para os adminstradores -->
+	{% if usuario.tipo == "ADM" %}
+	<center>
+
+	<table width="300px">
+		<caption>Projetos cadastrados em cada campus</caption>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=1 %}" class="btn  btn-block">Angical</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=2 %}" class="btn  btn-block">Corrente</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=3 %}" class="btn  btn-block">Floriano</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=4 %}"class="btn  btn-block">Parnaíba</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=5 %}"class="btn  btn-block">Paulistana</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=6 %}"class="btn  btn-block">Picos</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=7 %}"class="btn  btn-block">Piripiri</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=8 %}"class="btn  btn-block">São Raimundo Nonanto</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=9 %}"class="btn  btn-block">Teresina - Centro</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=10 %}"class="btn  btn-block">Teresina - Zona Sul</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url 'proagrupar.views.projetosCampus' nr_campus=11 %}"class="btn  btn-block">Uruçuí</a></td>
+		</tr>
+		
+	</table>
+	</center>
+	{% endif %}
+
+	<!--  Para os coordenadores de campus -->
+	{% if usuario.tipo == "COO" %}
+		<P>Relatórios a serem chancelados</P>
+		<ul>
+		{% for projeto in lista_projetos %}
+			<li>
+				<p><a href="{% url 'proagrupar.views.removeProjeto' nr_usuario=usuario.id %}"><img src="{{ MEDIA_URL }}imagens/lixeira.png"></a>
+				{{ projeto.titulo}}</p>
+				<table>
+				<thead>
+						<tr>
+							<th class="projeto">Relatórios</th>
+							<th class="projeto">Atualizado</th>
+							<th class="projeto">Chancelado</th>
+						</tr>
+					</thead>
+				{% for rel in lista_relatorios %}
+					{% if rel.projeto == projeto %}
+					<tr>
+						<td class="projeto"><a href="{% url 'proagrupar.views.chancela' nr_relatorio=rel.id%}">{{ rel.tipo }}</a></td>
+						{% if rel.descricao != ""%}
+						<td>
+							<img src="{{ MEDIA_URL }}imagens/sim.jpg" width="16px" heighr="16px">
+						</td>
+						{% else %}
+						<td class="projeto">
+							<img src="{{ MEDIA_URL }}imagens/nao.jpg" width="16px" heighr="16px">
+						</td>
+						{% endif %}
+						<td class="projeto">
+							{% if rel.chancelamento %}
+							<img src="{{ MEDIA_URL }}imagens/sim.jpg" width="16px" heighr="16px">
+							{% else %}
+							<img src="{{ MEDIA_URL }}imagens/nao.jpg" width="16px" heighr="16px">
+							{% endif %}
+						</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+				</table>
+			</li>
+		{% empty %}
+			<li>Sem relatórios para chancelamento no momento.</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	<!--  Para os professores -->
+	{% if usuario.tipo == "PRO" %}
+		<P>Relatórios a serem atualizados</P>
+		<ul>
+		{% for projeto in lista_projetos %}
+			<a href="{% url 'proagrupar.views.projeto' nr_projeto=projeto.id%}">{{ projeto.titulo }}</a>
+			<div>
+			<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+					<th>Relatório</th>
+					<th>Atualizado</th>
+					<th>Chancelado</th>
+					</tr>
+				</thead>
+				{% for relatorio in lista_relatorios %}
+				<tr>
+					{% if relatorio.projeto == projeto %}
+					<td>
+						<a href="{% url 'proagrupar.views.relatorio' nr_projeto=projeto.id nr_relatorio=relatorio.id %}">{{ relatorio.get_tipo_display }}</a>
+					</td>
+					<td>
+						{% if relatorio.descricao != "" %}
+							<i class="icon-thumbs-up"></i>
+						{% else %}
+							<i class="icon-thumbs-down"></i>
+						{% endif %}
+						{% if hoje >= relatorio.periodoInicio and hoje <= relatorio.periodoFim %}
+							<i class="icon-ok-sign"></i>
+						{% endif %}
+						{% if hoje > relatorio.periodoFim and relatorio.descricao == ""%}
+							<i class="icon-warning-sign"></i>
+						{% endif %}
+					</td>
+					<td>
+						{% if relatorio.chancelamento %}
+							<i class="icon-thumbs-up"></i>
+						{% else %}
+							<i class="icon-thumbs-down"></i>
+						{% endif %}
+					</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</table>
+			</div>
+		</li><br>
+		{% empty %}
+			<li>Sem relatórios para atualizados no momento.</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+
+<p>Professores cadastrados:</p>
+<ul>
+	{% for usuario in lista_usuarios %}
+		<li>
+			<a href="{% url 'proagrupar.views.removeUsuario' nr_usuario=usuario.id %}"><i class="icon-trash"></i></a>
+			<a href="{% url 'proagrupar.views.usuario' nr_usuario=usuario.id %}">{{ usuario.nome }}</a>
+		</li>
+	{% empty %}
+		<li>Sem usuários cadastrados</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

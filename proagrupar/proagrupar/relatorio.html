@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+<label for="campus">Campus</label>
+<select id="campus">
+	<option id="campus" value="TC">Teresina</option>
+	<option id="campus" value="AN">Angical</option>
+</select>
+
+<label for="mes">Mês</label>
+<select id="mes">
+	<option id="mes" value="0">Janeiro</option>
+	<option id="mes" value="1">Fevereiro</option>
+	<option id="mes" value="2">Março</option>
+</select>
+<a href="{% url 'proagrupar.views.relatorio' campus=campus mes=mes %}">Gerar relatório</a>
+{% end block %}

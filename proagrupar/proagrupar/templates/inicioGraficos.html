@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1');
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        var wrapper = new google.visualization.ChartWrapper({
+          chartType: 'ColumnChart',
+          dataTable: [['', 'Angical', 'Corrente', 'Teresina'],
+                      ['', {{pAngical}}, {{pCorrente}}, {{pTeresina}}]],
+          options: {'title': 'Campus'},
+          containerId: 'visualization'
+        });
+        wrapper.draw();
+      }
+      
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+{% endblock %}
+
+{% block corpo %}
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+{% endblock %}

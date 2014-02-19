@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="author" content="Wink Hosting (www.winkhosting.com)" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}/css/style.css" type="text/css" />
+	<!--
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+	<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+	-->
+	<title>ProAGRUPAR</title>
+	<script>
+	function escreveData()
+	{
+	now = new Date()
+	num_dia = now.getDate()
+	dia = now.getDay()
+	mes = now.getMonth()
+	ano = now.getFullYear()
+
+	diaSemana = new Array("Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado")
+	nomeMes = new Array("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+	dataext = num_dia + " de " + nomeMes[mes] + " de " + ano
+
+	return dataext;
+	}
+	
+	</script>
+</head>
+<body>
+	<div id="page" align="center">
+		<div id="toppage" align="center">
+			<div id="date">
+				<div class="smalltext" style="padding:13px;"><strong>
+					<script language=javascript>
+						window.document.write(escreveData());
+					</script></strong>
+				</div>
+			</div>
+			<div id="topbar">
+				<div align="right" style="padding:12px;" class="smallwhitetext"><a href="{% url 'proagrupar.views.inicio' %}" target="iframe_meio">Início</a> | <a href="#">Mapa do site</a> | <a href="{% url 'django.contrib.auth.views.logout_then_login' %}">Sair</a></div>
+			</div>
+		</div>
+		<div id="header" align="center">
+			<div class="titletext" id="logo">
+				<div class="logotext" style="margin:30px"><span class="orangelogotext">IFPI</span></div> 
+			</div>
+			<div id="pagetitle">
+				<p>Bem-vindo(a) {{ usuario.nome }}</p>
+				<div id="title" class="titletext" align="right">ProAGRUPAR</div>
+			</div>
+		</div>
+		<div id="content" align="center">
+			<div id="menu" align="right">
+				<div align="right" style="width:189px; height:8px;"><img src="{{ MEDIA_URL }}/imagens/mnu_topshadow.gif" width="189" height="8" alt="mnutopshadow" /></div>
+				<div id="linksmenu" align="center">
+					<a href="{% url 'proagrupar.views.inicio' %}" title="Início" target="iframe_meio">Início</a>
+
+					{% if usuario.tipo == "PRO" %}
+					<a href="{% url 'proagrupar.views.projetos' %}" title="Projetos cadastrados" target="iframe_meio">Projetos</a>
+					<a href="{% url 'proagrupar.views.certificados' %}" title="certificados" target="iframe_meio">Certificados</a>
+					{% endif %}
+					
+					{% if usuario.tipo == "COO" %}
+					<a href="{% url 'proagrupar.views.adicionaUsuario' %}" title="Cadastrar professor" target="iframe_meio">Cadastrar professor</a>
+					<a href="{% url 'proagrupar.views.adicionaProjeto' %}" title="Antes de adicionar um projeto, você deve adicionar o professor caso ele não esteja cadastrado." target="iframe_meio">Cadastrar projeto</a>
+					<a href="{% url 'proagrupar.views.professores' %}" title="Professores cadastrados" target="iframe_meio">Professores</a>
+					<a href="{% url 'proagrupar.views.projetos' %}" title="Todos os projetos cadastrados neste campus" target="iframe_meio">Projetos</a>
+					{% endif %}
+
+					{% if usuario.tipo == "ADM" %}
+					<a href="{% url 'proagrupar.views.adicionaUsuario' %}" title="Cadastrar usuário" target="iframe_meio">Cadastrar usuário</a>
+					<a href="{% url 'proagrupar.views.usuarios' %}" title="Usuários cadastrados no sistema" target="iframe_meio">Usuários</a>
+					<a href="{% url 'proagrupar.views.projetos' %}" title="Todos os projetos cadastrados" target="iframe_meio">Projetos</a>
+					{% endif %}
+				</div>
+				<div align="right" style="width:189px; height:8px;"><img src="media/imagens/mnu_bottomshadow.gif" width="189" height="8" alt="mnubottomshadow" /></div>
+			</div>
+		<div id="contenttext">
+			<iframe src="{% url 'proagrupar.views.inicio' %}" name="iframe_meio" frameborder="0" width="100%" height="800px"></iframe>
+		</div>
+		<div id="footer" class="smallgraytext" align="center">
+			<a href="{% url 'proagrupar.views.inicio' %}">Início</a> | <a href="#">Fale conosco</a><br />
+			IFPI &copy; 2013<br />
+			<a href="http://www.cefetpi.br" title="IFPI">Instituto Federal de Educação, Ciência e Tecnologia do Piauí</a><br /><br>
+		</div>
+	</div>
+</body>
+</html>

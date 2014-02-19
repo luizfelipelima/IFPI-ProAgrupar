@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+<center>
+<p>{{ projeto.titulo }}</p>
+<p>Professor: {{ projeto.professor }}</p>
+<p>Campus: {{ projeto.get_campus_display }}</p>
+<p>Cadastrado em: {{ projeto.dataEHoraCadastro }}</p>
+{% for rel in relatorios %}
+	<a class="btn" href="{% url 'proagrupar.views.relatorio' nr_projeto=projeto.id nr_relatorio=rel.id %}">{{ rel.get_tipo_display }}</a>
+{% endfor %}
+</center>
+<br>
+<a class="btn" href="javascript:window.history.go(-1)"><i class="icon-arrow-left"></i> Voltar</a>
+<a class="btn" href="{% url 'proagrupar.views.inicio' %}"><i class="icon-home"></i> Início</a>
+{% endblock %}

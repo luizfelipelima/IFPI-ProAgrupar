@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+<form action="." method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit">Salvar</button>
+</form>
+{% endblock %}

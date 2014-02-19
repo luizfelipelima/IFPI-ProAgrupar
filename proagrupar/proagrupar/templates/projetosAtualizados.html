@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+
+<ul>
+	{% for projetos in lista_projetos %}
+		
+		<li>
+			<!--<a href="/removeProjeto/{{ projetos.id }}"><img src="/media/imagens/lixeira.png">-->
+			<a href="{% url 'proagrupar.views.projeto' nr_projeto=projeto.id %}">{{ projetos.titulo}}</a>
+		</li>
+		{%}
+	{% empty %}
+		<li>Sem projetos atualizados</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

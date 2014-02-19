@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+
+{% block corpo %}
+
+<p>{{ relatorio.projeto }}</p>
+<p>Professor: {{ usuario.nome }}</p>
+<p>De {{ relatorio.periodoInicio }} até {relatorio.periodoFim }}</p>
+<p>Descrição:</p>
+<p>{{ relatorio.descricao }}</p>
+<p>Comentários:</p>
+<p>{{ relatorio.comentario }}</p>
+<p>Justificativa:</p>
+<p>{{ relatorio.justificativa }}</p>
+
+{% endblock %}

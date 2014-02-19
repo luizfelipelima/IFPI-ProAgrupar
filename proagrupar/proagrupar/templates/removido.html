@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/bootstrap.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/bootstrap.js"></script>
+{% endblock %}
+{% block corpo %}
+<p>Registro removido com sucesso</p>
+<p><a href="{% url 'proagrupar.views.inicio' %}">Voltar para o início</a></p>
+{% endblock %}
